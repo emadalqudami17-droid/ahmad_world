@@ -1,6 +1,6 @@
 [app]
 
-title = Ahmed's World
+title = Ahmed World
 package.name = ahmedworld
 package.domain = org.ahmedapp
 
