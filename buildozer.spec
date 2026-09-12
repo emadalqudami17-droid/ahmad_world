@@ -23,8 +23,7 @@ version = 2.0
 
 # (list) Application requirements
 # IMPORTANT: Kivy 2.3.0 officially supports Python up to 3.12
-requirements = python3==3.12.10,hostpython3==3.12.10,kivy==2.3.0,plyer
-
+requirements = python3==3.11.9,hostpython3==3.11.9,kivy==2.3.0,plyer
 # (str) Icon of the application
 icon.filename = %(source.dir)s/app_icon.png
 
