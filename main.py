@@ -29,17 +29,14 @@ BUTTON_H = 0.13
 
 
 # ═══════════════════════════════════════════════
-# SPLASH SCREEN (Welcome Screen with Ahmed's Photo)
+# SPLASH SCREEN
 # ═══════════════════════════════════════════════
 class SplashScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation='vertical', padding=30, spacing=20)
-
-        # Top spacing
         layout.add_widget(Label(size_hint=(1, 0.1), text=''))
 
-        # Ahmed's Photo
         self.photo = Image(
             source='images/app_icon.png',
             size_hint=(1, 0.55),
@@ -48,7 +45,6 @@ class SplashScreen(Screen):
         )
         layout.add_widget(self.photo)
 
-        # Welcome Text
         welcome = Label(
             text="Welcome to Ahmed's World!",
             font_size='26sp',
@@ -61,7 +57,6 @@ class SplashScreen(Screen):
         welcome.bind(size=welcome.setter('text_size'))
         layout.add_widget(welcome)
 
-        # Loading indicator
         loading = Label(
             text="Loading...",
             font_size='18sp',
@@ -74,7 +69,6 @@ class SplashScreen(Screen):
         self.add_widget(layout)
 
     def on_enter(self):
-        # Auto-transition to main menu after 2.5 seconds
         Clock.schedule_once(self.go_to_menu, 2.5)
 
     def go_to_menu(self, dt):
@@ -88,11 +82,8 @@ class SplashScreen(Screen):
 class MainMenuScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        # Main container with light background
         main_box = BoxLayout(orientation='vertical', padding=20, spacing=12)
 
-        # Title container
         title_box = BoxLayout(orientation='vertical', size_hint=(1, 0.15))
         title = Label(
             text="Ahmed's World",
@@ -106,10 +97,8 @@ class MainMenuScreen(Screen):
         title_box.add_widget(title)
         main_box.add_widget(title_box)
 
-        # Buttons container
         buttons_box = BoxLayout(orientation='vertical', spacing=12, size_hint=(1, 0.85))
 
-        # Bathroom Routine button
         btn_routine = Button(
             text="Bathroom Routine",
             font_size='22sp', bold=True,
@@ -121,7 +110,6 @@ class MainMenuScreen(Screen):
         btn_routine.bind(on_press=lambda x: self.goto('toilet_routine'))
         buttons_box.add_widget(btn_routine)
 
-        # I Want button
         btn_aac = Button(
             text="I Want",
             font_size='22sp', bold=True,
@@ -133,7 +121,6 @@ class MainMenuScreen(Screen):
         btn_aac.bind(on_press=lambda x: self.goto('aac_board'))
         buttons_box.add_widget(btn_aac)
 
-        # Quiz Game button
         btn_quiz = Button(
             text="Quiz Game",
             font_size='22sp', bold=True,
@@ -145,7 +132,6 @@ class MainMenuScreen(Screen):
         btn_quiz.bind(on_press=lambda x: self.goto('quiz_game'))
         buttons_box.add_widget(btn_quiz)
 
-        # Memory Game button
         btn_memory = Button(
             text="Memory Game",
             font_size='22sp', bold=True,
@@ -157,7 +143,6 @@ class MainMenuScreen(Screen):
         btn_memory.bind(on_press=lambda x: self.goto('memory_game'))
         buttons_box.add_widget(btn_memory)
 
-        # Exit button
         btn_exit = Button(
             text="Exit",
             font_size='20sp', bold=True,
@@ -203,7 +188,6 @@ class ToiletRoutineScreen(Screen):
         self.current_sound = None
         self.layout = BoxLayout(orientation='vertical', padding=12, spacing=8)
 
-        # Back button
         btn_back = Button(
             text="Back to Menu",
             font_size='18sp', bold=True,
@@ -215,7 +199,6 @@ class ToiletRoutineScreen(Screen):
         btn_back.bind(on_press=self.go_home)
         self.layout.add_widget(btn_back)
 
-        # Step label
         self.label = Label(
             text=self.steps[0]["text"],
             font_size='24sp', bold=True,
@@ -227,7 +210,6 @@ class ToiletRoutineScreen(Screen):
         self.label.bind(size=self.label.setter('text_size'))
         self.layout.add_widget(self.label)
 
-        # Image
         self.img = Image(
             source=self.steps[0]["image"],
             size_hint=(1, 0.62),
@@ -237,7 +219,6 @@ class ToiletRoutineScreen(Screen):
         )
         self.layout.add_widget(self.img)
 
-        # Next button
         self.btn_next = Button(
             text="Done!",
             font_size='26sp', bold=True,
@@ -313,11 +294,9 @@ class AACBoardScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.current_sound = None
-        self.selected_img = None
 
         main_layout = BoxLayout(orientation='vertical', padding=12, spacing=8)
 
-        # Back button
         btn_back = Button(
             text="Back to Menu",
             font_size='18sp', bold=True,
@@ -329,7 +308,6 @@ class AACBoardScreen(Screen):
         btn_back.bind(on_press=lambda x: self.go_home())
         main_layout.add_widget(btn_back)
 
-        # Big preview image area
         self.preview = Image(
             source='images/app_icon.png',
             size_hint=(1, 0.35),
@@ -338,7 +316,6 @@ class AACBoardScreen(Screen):
         )
         main_layout.add_widget(self.preview)
 
-        # Cards grid
         grid = GridLayout(cols=3, spacing=8, size_hint=(1, 0.58))
 
         self.cards = [
@@ -372,13 +349,10 @@ class AACBoardScreen(Screen):
         self.add_widget(main_layout)
 
     def play_phrase(self, card):
-        # Show image in preview
         try:
             self.preview.source = card["image"]
         except Exception:
             pass
-
-        # Play audio
         if self.current_sound:
             try:
                 self.current_sound.stop()
@@ -401,37 +375,37 @@ class QuizGameScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.current_sound = None
+        # ⚠️ كل الخيارات هي صور أشخاص (وليس ماء/طعام)
         self.questions = [
             {
                 "question": "Where is Ahmed?",
                 "audio": "audio/q_ahmed.wav",
                 "correct": "images/aac_ahmed.png",
-                "options": ["images/aac_water.png", "images/aac_ahmed.png", "images/aac_food.png"]
-            },
-            {
-                "question": "Where is Dad Emad?",
-                "audio": "audio/q_dad.wav",
-                "correct": "images/aac_dad.png",
-                "options": ["images/aac_dad.png", "images/aac_play.png", "images/aac_toilet.png"]
+                "options": ["images/aac_milad.png", "images/aac_ahmed.png", "images/aac_mohamed.png"]
             },
             {
                 "question": "Where is Mohamed?",
                 "audio": "audio/q_mohamed.wav",
                 "correct": "images/aac_mohamed.png",
-                "options": ["images/aac_milad.png", "images/aac_mohamed.png", "images/aac_ahmed.png"]
+                "options": ["images/aac_ahmed.png", "images/aac_mohamed.png", "images/aac_milad.png"]
             },
             {
                 "question": "Where is Milad?",
                 "audio": "audio/q_milad.wav",
                 "correct": "images/aac_milad.png",
-                "options": ["images/aac_mohamed.png", "images/aac_food.png", "images/aac_milad.png"]
+                "options": ["images/aac_mohamed.png", "images/aac_milad.png", "images/aac_ahmed.png"]
+            },
+            {
+                "question": "Where is Dad Emad?",
+                "audio": "audio/q_dad.wav",
+                "correct": "images/aac_dad.png",
+                "options": ["images/aac_dad.png", "images/aac_ahmed.png", "images/aac_mohamed.png"]
             }
         ]
         self.current_q = 0
 
         self.layout = BoxLayout(orientation='vertical', padding=12, spacing=8)
 
-        # Back button
         btn_back = Button(
             text="Back to Menu",
             font_size='18sp', bold=True,
@@ -443,7 +417,6 @@ class QuizGameScreen(Screen):
         btn_back.bind(on_press=self.go_home)
         self.layout.add_widget(btn_back)
 
-        # Question label
         self.label = Label(
             text=self.questions[0]["question"],
             font_size='26sp', bold=True,
@@ -455,7 +428,6 @@ class QuizGameScreen(Screen):
         self.label.bind(size=self.label.setter('text_size'))
         self.layout.add_widget(self.label)
 
-        # Grid
         self.grid = GridLayout(cols=3, spacing=10, size_hint=(1, 0.8))
         self.update_options()
         self.layout.add_widget(self.grid)
@@ -480,27 +452,25 @@ class QuizGameScreen(Screen):
             sound.play()
 
     def update_options(self):
+        """إصلاح: صور بدل أزرار - تظهر بحجم كامل"""
         self.grid.clear_widgets()
         q_data = self.questions[self.current_q]
         for opt in q_data["options"]:
-            # Container with the image filling it
-            btn = Button(
-                background_normal='',
-                background_color=(0.95, 0.95, 0.95, 1),
-                size_hint=(1, 1),
-                size=(0, 0)  # Force fill
-            )
             img = Image(
                 source=opt,
                 allow_stretch=True,
                 keep_ratio=True,
                 size_hint=(1, 1),
-                size=(0, 0),
-                pos_hint={'center_x': 0.5, 'center_y': 0.5}
+                nocache=True
             )
-            btn.add_widget(img)
-            btn.bind(on_press=lambda instance, i=opt: self.check_answer(i))
-            self.grid.add_widget(btn)
+            img.bind(on_touch_down=lambda inst, touch, i=opt: self.on_image_click(inst, touch, i))
+            self.grid.add_widget(img)
+
+    def on_image_click(self, instance, touch, img_path):
+        if instance.collide_point(*touch.pos):
+            self.check_answer(img_path)
+            return True
+        return False
 
     def check_answer(self, selected_img):
         correct_img = self.questions[self.current_q]["correct"]
@@ -539,7 +509,6 @@ class MemoryGameScreen(Screen):
 
         main_layout = BoxLayout(orientation='vertical', padding=12, spacing=8)
 
-        # Header
         header = BoxLayout(orientation='horizontal', size_hint=(1, 0.09), spacing=8)
 
         btn_back = Button(
@@ -574,7 +543,6 @@ class MemoryGameScreen(Screen):
 
         main_layout.add_widget(header)
 
-        # Grid
         self.grid = GridLayout(cols=4, spacing=6, size_hint=(1, 0.83))
         main_layout.add_widget(self.grid)
 
