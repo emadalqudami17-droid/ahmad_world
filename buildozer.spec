@@ -1,6 +1,6 @@
 [app]
 
-title = Ahmed World
+title = Ahmed's World
 package.name = ahmedworld
 package.domain = org.ahmedapp
 
@@ -15,6 +15,9 @@ requirements = python3,kivy==2.1.0,plyer,arabic-reshaper,python-bidi,pyjnius
 p4a.branch = v2024.01.21
 p4a.bootstrap = sdl2
 
+# App icon (will be picked from root)
+icon.filename = %(source.dir)s/app_icon.png
+
 orientation = portrait
 fullscreen = 1
 
@@ -25,6 +28,11 @@ android.ndk = 25b
 android.archs = arm64-v8a
 android.accept_sdk_license = True
 android.enable_androidx = True
+android.allow_backup = True
+
+# Presplash (loading screen before app opens)
+presplash.filename = %(source.dir)s/app_icon.png
+presplash.color = #FFFFFF
 
 [buildozer]
 log_level = 2
