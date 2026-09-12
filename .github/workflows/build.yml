@@ -27,6 +27,7 @@ jobs:
       - name: Organize files into folders
         run: |
           mkdir -p images audio
+          # Keep app_icon.png in root, move other PNGs to images/
           find . -maxdepth 1 -name "*.png" -not -name "app_icon.png" -exec mv {} images/ \;
           find . -maxdepth 1 -name "*.wav" -exec mv {} audio/ \;
           find . -maxdepth 1 -name "*.mp3" -exec mv {} audio/ \;
@@ -34,6 +35,8 @@ jobs:
           ls images/ 2>/dev/null | head -10 || echo "empty"
           echo "=== audio ==="
           ls audio/ 2>/dev/null | head -10 || echo "empty"
+          echo "=== root (should contain app_icon.png) ==="
+          ls *.png 2>/dev/null || echo "no png in root"
 
       - name: Install System Dependencies
         run: |
