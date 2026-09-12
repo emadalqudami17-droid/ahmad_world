@@ -16,7 +16,7 @@ p4a.branch = v2024.01.21
 p4a.bootstrap = sdl2
 
 # App icon (will be picked from root)
-icon.filename = %(source.dir)s/app_icon.png
+
 
 orientation = portrait
 fullscreen = 1
@@ -31,7 +31,7 @@ android.enable_androidx = True
 android.allow_backup = True
 
 # Presplash (loading screen before app opens)
-presplash.filename = %(source.dir)s/app_icon.png
+
 presplash.color = #FFFFFF
 
 [buildozer]
